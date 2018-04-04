@@ -62,20 +62,21 @@ function songInfo(songName) {
 }
 if (command === "spotify-this-song") {
     var songName = process.argv[3];
-    songInfo((songName || "The Sign" ));
+    songInfo((songName || "The Sign"));
 }
 
-var fs = require("fs");
-fs.readFile("random.txt", "utf8", function(error, data) {
-    if (error) {
-      return console.log(error);
-    }
-    console.log(data);
-    var dataArr = data.split(",");
-    console.log(dataArr);
-  });
-
-// * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-     
-//      * It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
-     
+if (command === "do-what-it-says") {
+    var fs = require("fs");
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        var dataArr = data.split(",");
+        var cmd = dataArr[0].trim();
+        var input = dataArr[1].trim();
+        if (cmd === "spotify-this-song"){
+            songInfo(input);
+        }
+        
+    });
+}
